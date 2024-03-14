@@ -67,24 +67,16 @@ colors = []
 b = int(random.random() * 255) - 1
 g = int(random.random() * 255)
 r = int(random.random() * 255)
-print(b, g, r)
+# print(b, g, r)
 colors.append(ColorRect(200, 0, 100, 100, (80, 0, 165)))
-# red
 colors.append(ColorRect(300, 0, 100, 100, (0, 214, 196)))
-# blue
 colors.append(ColorRect(400, 0, 100, 100, (222, 196, 0)))
-# green
 colors.append(ColorRect(500, 0, 100, 100, (106, 66, 0)))
-# yellow
 colors.append(ColorRect(600, 0, 100, 100, (78, 82, 32)))
-
 colors.append(ColorRect(700, 0, 100, 100, (45, 168, 228)))
 colors.append(ColorRect(800, 0, 100, 100, (255, 0, 255)))
 colors.append(ColorRect(900, 0, 100, 100, (0xCB, 0xC0, 255)))
-
-# erase (black)
 colors.append(ColorRect(1000, 0, 100, 100, (0, 0, 0), "Eraser"))
-# clear
 clear = ColorRect(1100, 0, 100, 100, (100, 100, 100), "Clear")
 
 ########## Image #######
@@ -93,11 +85,6 @@ class ImageData:
     def __int__(self, x = 0, y = 0):
         self.x = x
         self.y = y
-
-img = cv2.imread('assets/exrobot.png')
-img = cv2.resize(img, (0, 0), fx = 0.05, fy = 0.05)
-
-showImage = []
 
 ########## pen sizes #######
 penX = 1250
@@ -120,7 +107,7 @@ hideBoard = False
 hideColors = False
 hidePenSizes = False
 
-imageLogiscool = cv2.imread('assets/logiscool.png')
+imageLogiscool = cv2.imread('logiscool.png')
 
 def showImageFunc(frame, scale, x, y):
     tempImage = cv2.resize(imageLogiscool, (0, 0), fx=scale, fy=scale)
@@ -177,42 +164,10 @@ while True:
 
                 # Clear
                 if clear.isOver(x, y):
-                    showImage.clear()
                     clear.alpha = 0
                     canvas = np.zeros((height, width, 3), np.uint8)
                 else:
                     clear.alpha = 0.5
-
-            # # color button
-            # if colorsBtn.isOver(x, y) and not coolingCounter:
-            #     coolingCounter = 10
-            #     colorsBtn.alpha = 0
-            #     hideColors = False if hideColors else True
-            #     colorsBtn.text = 'Colors' if hideColors else 'Hide'
-            # else:
-            #     colorsBtn.alpha = 0.5
-
-            # # Pen size button
-            # if penBtn.isOver(x, y) and not coolingCounter:
-            #     coolingCounter = 10
-            #     penBtn.alpha = 0
-            #     hidePenSizes = False if hidePenSizes else True
-            #     penBtn.text = 'Pen' if hidePenSizes else 'Hide'
-            # else:
-            #     penBtn.alpha = 0.5
-
-            # # white board button
-            # if boardBtn.isOver(x, y) and not coolingCounter:
-            #     coolingCounter = 10
-            #     boardBtn.alpha = 0
-            #     hideBoard = False if hideBoard else True
-            #     boardBtn.text = 'Board' if hideBoard else 'Hide'
-
-            # else:
-            #     boardBtn.alpha = 0.5
-
-
-
 
         elif upFingers[1] and upFingers[2] and upFingers[3] and upFingers[4]:
         # elif upFingers[1] and not upFingers[2]:
@@ -230,16 +185,6 @@ while True:
 
         else:
             px, py = 0, 0
-
-    # # put colors button
-    # colorsBtn.drawRect(frame)
-    # cv2.rectangle(frame, (colorsBtn.x, colorsBtn.y), (colorsBtn.x + colorsBtn.w, colorsBtn.y + colorsBtn.h),
-    #               (255, 255, 255), 2)
-
-    # # put white board buttin
-    # boardBtn.drawRect(frame)
-    # cv2.rectangle(frame, (boardBtn.x, boardBtn.y), (boardBtn.x + boardBtn.w, boardBtn.y + boardBtn.h), (255, 255, 255),
-    #               2)
 
     # put the white board on the frame
     if not hideBoard:
@@ -270,11 +215,6 @@ while True:
             cv2.rectangle(frame, (pen.x, pen.y), (pen.x + pen.w, pen.y + pen.h), (255, 255, 255), 2)
 
     showImageFunc(frame, 0.15, 20, 35)
-
-    img_height, img_width, _ = img.shape
-    if len(showImage):
-        for ImageData in showImage:
-            frame[ImageData[1]:ImageData[1] + img_height, ImageData[0]:ImageData[0] + img_width] = img
 
     cv2.imshow('Logiscool Air Draw', frame)
     # cv2.imshow('canvas', canvas)
